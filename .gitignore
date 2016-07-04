@@ -1,0 +1,9 @@
+.project
+.classpath
+/target
+/.settings
+/bin
+/container/.settings
+/distribution/.settings
+/distribution/target
+
