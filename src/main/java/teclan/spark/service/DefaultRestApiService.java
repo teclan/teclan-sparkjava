@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import spark.Request;
 import teclan.spark.model.AbstractServiceModel;
 import teclan.spark.service.handle.Handle;
-import teclan.spark.utils.GsonUtils;
+import teclan.utils.GsonUtils;
 
 public class DefaultRestApiService implements RestApiService {
 
