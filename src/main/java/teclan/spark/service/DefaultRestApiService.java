@@ -49,7 +49,7 @@ public class DefaultRestApiService implements RestApiService {
      *            请求url
      * 
      * @param handle
-     *            处理的接口
+     *            处理的接口，String handle(Map<String, String> paramataersAndValues)
      * 
      * @param paramaters
      * 
@@ -89,7 +89,7 @@ public class DefaultRestApiService implements RestApiService {
      *            请求url
      * 
      * @param handle
-     *            处理的接口
+     *            处理的接口，String handle(Map<String, String> paramataersAndValues)
      */
     @Override
     public void createPostRequestService(String url, Handle handle) {
@@ -123,7 +123,7 @@ public class DefaultRestApiService implements RestApiService {
      *            请求url
      * 
      * @param handle
-     *            处理的接口
+     *            处理的接口,触发 String handle(InputStream input, String originPath)
      * 
      * @param part
      *            前端文件上传控件域的"name"属性值,必须保持一直,例如: < input type='file'
@@ -190,7 +190,7 @@ public class DefaultRestApiService implements RestApiService {
      *            请求url
      * 
      * @param handle
-     *            处理的接口
+     *            处理的接口，<T> String handle(Object object)
      * 
      * @param classOfT
      *            指定处理此请求的类(此类继承 declean.spark.model.AbstractServiceModel)
@@ -253,7 +253,7 @@ public class DefaultRestApiService implements RestApiService {
      *            请求url
      * 
      * @param handle
-     *            处理的接口
+     *            处理的接口，<T> String handle(Object object, String method)
      * 
      * @param method
      * 
