@@ -1,4 +1,4 @@
-package teclan.spark.factory;
+package teclan.spark.example;
 
 import static spark.Spark.post;
 
@@ -9,9 +9,9 @@ import java.nio.file.StandardCopyOption;
 
 import javax.servlet.MultipartConfigElement;
 
-public class PostFactory {
+public class PostRequestExample {
 
-    public PostFactory() {
+    public PostRequestExample() {
 
         post("/post", (request, response) -> "Hello World: " + request.body());
 
@@ -23,8 +23,8 @@ public class PostFactory {
         post("/upload", (req, res) -> {
 
             File uploadDir = new File("upload");
-            uploadDir.mkdir(); // create the upload directory if it doesn't
-                               // exist
+            // create the upload directory if it doesn't exist
+            uploadDir.mkdir();
 
             req.attribute("org.eclipse.jetty.multipartConfig",
                     new MultipartConfigElement("/temp"));
@@ -42,14 +42,12 @@ public class PostFactory {
                         StandardCopyOption.REPLACE_EXISTING);
 
             }
-
             return "文件上传成功" + path;
-
         });
     }
 
     public static void init() {
-        new PostFactory();
+        new PostRequestExample();
     }
 
 }

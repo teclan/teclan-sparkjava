@@ -1,9 +1,10 @@
-package teclan.spark;
+package teclan.spark.example.test;
 
 import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import teclan.spark.Main;
 import us.monoid.web.Resty;
 
 /**
@@ -13,7 +14,8 @@ import us.monoid.web.Resty;
  *
  */
 public class GetTest {
-    private static final Logger LOGGER = LoggerFactory.getLogger(GetTest.class);
+    private static final Logger LOGGER                         = LoggerFactory
+            .getLogger(GetTest.class);
 
     private static final String WITHOUT_PARAMETERS_GET_URL     = "http://localhost:%d/hello";
     private static final String WITH_PARAMETERS_GET_URL        = "http://localhost:%d/hello/%s";
