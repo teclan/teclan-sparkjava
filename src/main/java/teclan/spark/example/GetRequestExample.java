@@ -3,18 +3,14 @@ package teclan.spark.example;
 import static spark.Spark.get;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
-import java.util.List;
 
-import org.apache.tools.zip.ZipEntry;
-import org.apache.tools.zip.ZipOutputStream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import teclan.utils.FileUtils;
 import us.monoid.json.JSONObject;
 
 public class GetRequestExample {
@@ -82,7 +78,6 @@ public class GetRequestExample {
             // filename 的值即为需要下载的文件
             try {
                 String fileName = request.queryParams("filename");
-                File file = new File(fileName);
 
                 response.raw().setContentType("application/octet-stream");
 
@@ -92,34 +87,20 @@ public class GetRequestExample {
                 response.raw().setHeader("Content-Disposition",
                         "attachment; filename=" + fileName + ".zip");
 
-                try (ZipOutputStream zipOutputStream = new ZipOutputStream(
-                        new BufferedOutputStream(
-                                response.raw().getOutputStream()))) {
+                FileUtils.zip("/home/dev/Downloads/11", fileName);
 
-                    File file1 = new File("/home/dev/Downloads/中文11.doc");
-                    File file2 = new File("/home/dev/Downloads/中文.doc");
-
-                    List<File> files = new ArrayList<File>();
-                    files.add(file1);
-                    files.add(file2);
-
-                    BufferedInputStream bufferedInputStream;
-                    ZipEntry zipEntry;
-                    for (File f : files) {
-                        bufferedInputStream = new BufferedInputStream(
-                                new FileInputStream(f));
-                        zipEntry = new ZipEntry(
-                                java.net.URLEncoder.encode(f.getName(), "GBK"));
-
-                        zipOutputStream.putNextEntry(zipEntry);
-                        zipOutputStream.setEncoding("UTF-8");
-                        byte[] buffer = new byte[1024];
-                        int len;
-                        while ((len = bufferedInputStream.read(buffer)) > 0) {
-                            zipOutputStream.write(buffer, 0, len);
-                        }
+                try (OutputStream outputStream = response.raw()
+                        .getOutputStream();
+                        BufferedInputStream bufferedInputStream = new BufferedInputStream(
+                                new FileInputStream(
+                                        new File(fileName + ".zip")))) {
+                    byte[] buffer = new byte[1024];
+                    int len;
+                    while ((len = bufferedInputStream.read(buffer)) > 0) {
+                        outputStream.write(buffer, 0, len);
                     }
                 }
+
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
             }
