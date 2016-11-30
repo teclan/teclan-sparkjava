@@ -3,11 +3,9 @@ package teclan.spark.example;
 import static spark.Spark.get;
 
 import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+import java.io.OutputStream;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +13,8 @@ import org.slf4j.LoggerFactory;
 import us.monoid.json.JSONObject;
 
 public class GetRequestExample {
-    private final Logger LOGGER = LoggerFactory.getLogger(GetRequestExample.class);
+    private final Logger LOGGER = LoggerFactory
+            .getLogger(GetRequestExample.class);
 
     public GetRequestExample() {
         get("/hello", (req, res) -> "Hello World");
@@ -52,28 +51,20 @@ public class GetRequestExample {
 
                 response.raw().setContentType("application/octet-stream");
 
-                // NOTE
-                // response.raw().setHeader("Content-Disposition",
-                // "attachment; filename="+ fileName;
-                // 将导致下载的压缩包如果含中文名时乱码，但是依然没有解决解压后的中文名乱码问题
+                // // IE浏览器
+                // filename = URLEncoder.encode(filename, "UTF-8");
+                fileName = new String(fileName.getBytes("UTF-8"), "ISO-8859-1");
                 response.raw().setHeader("Content-Disposition",
-                        "attachment; filename=" + java.net.URLEncoder
-                                .encode(fileName + ".zip", "UTF-8"));
+                        "attachment; filename=" + fileName);
 
-                try (ZipOutputStream zipOutputStream = new ZipOutputStream(
-                        new BufferedOutputStream(
-                                response.raw().getOutputStream()));
+                try (OutputStream outputStream = response.raw()
+                        .getOutputStream();
                         BufferedInputStream bufferedInputStream = new BufferedInputStream(
                                 new FileInputStream(file))) {
-
-                    // // FIX ME
-                    // // 这里存在中文文件名乱码的问题
-                    ZipEntry zipEntry = new ZipEntry(fileName);
-                    zipOutputStream.putNextEntry(zipEntry);
                     byte[] buffer = new byte[1024];
                     int len;
                     while ((len = bufferedInputStream.read(buffer)) > 0) {
-                        zipOutputStream.write(buffer, 0, len);
+                        outputStream.write(buffer, 0, len);
                     }
                 }
             } catch (Exception e) {
