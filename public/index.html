@@ -1,0 +1,132 @@
+<html>
+
+  <head>
+    <title>Teclan</title>
+    
+    <meta charset="utf-8">
+
+    <script src="/css/bootstrap.min.css">
+    <!-- 可选的Bootstrap主题文件（一般不使用） -->
+    <script src="css/bootstrap-theme.min.css"></script>
+    <!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
+    <script src="js/jquery.min.js"></script>
+    <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/angular.min.js"></script>
+
+
+    <style text/css>
+    .mydiv {
+      margin-top:10px;
+      margin-left:41%;
+    }
+
+    .welcome{
+      margin-top:200px;
+      margin-left:40%;
+      color:white;
+      font-size:18px;
+    }
+
+    .spanClass{
+      color:white;
+      font-size:18px;
+    }
+
+    .inputClass{
+      color:black;
+      font-size:18px;
+    }
+
+    .regist{
+      margin-left:120px;
+      width:50;
+      height:30px;
+    }
+
+    .login{
+      margin-left:10px;
+      width:50;
+      height:30px;
+    }
+
+    .copyright{
+      margin-left:45%;
+      margin-top:27%;
+      color:white;
+      font-size:16px;
+    }
+
+    body {
+    background-color:black;
+    <!--  background-image: url('images/background.jpg');-->
+    background-size:100% 100%;
+    background-attachment: fixed;
+  }
+    </style>
+
+  </head>
+  <body>
+
+    <div class="welcome">
+      <h2>Archives Security System</h2>
+    </div>
+    <form ng-app="myApp"   name="myForm" ng-controller="validateCtrl" novalidate">
+          <div class="mydiv">
+          <!-- <span class="spanClass">用户</span> -->
+          <input type="text"  id="_user"  class="inputClass" name="user" ng-model="user" required>
+          <span style="color:red" ng-show="myForm.user.$dirty && myForm.user.$invalid">
+          <span ng-show="myForm.user.$error.required">用户名不能为空</span>
+          </span>
+        </div>
+        <div class="mydiv">
+          <!--   <span class="spanClass">密码</span> -->
+          <input type="password" id="_password" class="inputClass" name="password" ng-model="password" required>
+          <span style="color:red" ng-show="myForm.password.$dirty && myForm.password.$invalid">
+          <span ng-show="myForm.password.$error.required">密码不能为空</span>
+       </div>
+       <div class="mydiv">
+        <button type="button" class="regist" >regist</button>
+        <input type="submit" class="login" value="login">
+      </div>
+      </form>
+      <div class="copyright">
+        <h5>@2016 Teclan</h5>
+      </div>
+
+
+      <script>
+
+     var app = angular.module('myApp', []);
+     app.controller('validateCtrl', function($scope) {
+          $scope.user = 'username';
+          $scope.password = 'password';
+      });
+
+     $(document).ready(function(){
+	$(".regist").click(function(){
+
+       var user = $("#_user").val();
+         console.log(user);
+        var password = $("#_password").val();
+		$.ajax({
+                        url:"http://localhost:3770/hello",
+ 			type:'GET',
+			data:{user:user,password:password},
+			dataType:'jsonp',
+			success: function(data,status){
+			alert("数据: " + data + "\n状态: " + status);
+				},
+			error: function(){
+				alert('sss');
+				}
+			});
+	});
+     });
+
+
+      </script>
+  </body>
+
+
+</html>

@@ -1,6 +1,12 @@
 package teclan.spark;
 
 import static spark.Spark.port;
+import static spark.Spark.staticFiles;
+
+import java.io.File;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import spark.Service;
 import teclan.spark.example.DeleteRequestExample;
@@ -9,6 +15,7 @@ import teclan.spark.example.PostRequestExample;
 import teclan.spark.example.PutRequestExample;
 
 public class Main {
+	private static final Logger LOGGER =LoggerFactory.getLogger(Main.class);
 
     public static final int PORT = 3770;
 
@@ -21,12 +28,13 @@ public class Main {
         // 使用 https
         // secure("deploy/keystore.jks", "password", null, null);
 
-        // 静态文件
-        service.staticFiles
-                .externalLocation(System.getProperty("java.io.tmpdir"));
+    
 
         port(PORT);
-
+        
+        // 必须使用 import static spark.Spark.staticFiles 的 staticFiles 来加载静态文件
+        // 纯文本文件会直接在浏览器显示，带有特定格式的会被下载
+        staticFiles.location("public"); 
         GetRequestExample.init();
         PostRequestExample.init();
         PutRequestExample.init();
