@@ -15,43 +15,26 @@
   </properties>
 
   <dependencies>
-  
-		<dependency>
-		    <groupId>org.apache.ant</groupId>
-		    <artifactId>ant</artifactId>
-		    <version>1.9.7</version>
-		</dependency>
-  
 	<dependency>
 	    <groupId>com.sparkjava</groupId>
 	    <artifactId>spark-core</artifactId>
 	    <version>2.5</version>
 	</dependency>
-	
-	<dependency>
-       <groupId>com.google.code.gson</groupId>
-       <artifactId>gson</artifactId>
-       <version>2.6.2</version>
-    </dependency>
-	
 	<dependency>
 	    <groupId>org.slf4j</groupId>
 	    <artifactId>slf4j-simple</artifactId>
 	    <version>1.7.21</version>
 	</dependency>
-	
 	<dependency>
             <groupId>us.monoid.web</groupId>
             <artifactId>resty</artifactId>
             <version>0.3.2</version>
         </dependency>
-	
 	<dependency>
 	 	<groupId>teclan.utils</groupId>
 	  	<artifactId>teclan-utils</artifactId>
 	  	<version>0.1.0</version>
 	</dependency>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
